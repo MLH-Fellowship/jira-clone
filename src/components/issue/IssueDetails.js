@@ -1,9 +1,12 @@
 import React from 'react'
 import Modal from "react-modal"
+import IssueTools from '../issue/IssueTools'
+import IssueDescription from '../issue/IssueDescription'
 
 Modal.setAppElement("#root");
 
-const IssueDetails = ({ show, onClose, item }) => {
+const IssueDetails = ({ show, onClose, issue }) => {
+  const {title, id} = issue
   return (
     <div>
       <Modal
@@ -15,22 +18,18 @@ const IssueDetails = ({ show, onClose, item }) => {
         <div className="">
           <button className="close-btn" onClick={onClose}>X</button>
           <h1 className='modal-title'>
-           <b> Issue#{item.id}</b>
-            <br/> {item.title}
+           <b> Issue#{id}</b>
+            <br/> {title}
           </h1>
+          <div class="issue-details">
+            <div class="issue-description">
+              <IssueDescription issue={issue}/>
+            </div> 
+            <div class="issue-tools">
+              <IssueTools/>
+            </div>
+          </div>
         </div>
-        <div>
-          <h2 style={{fontSize:"20px"}}>Description:</h2>
-          <p>{item.content}</p>
-          <p>{item.icon} {item.status}</p>
-        </div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
       </Modal>
     </div>
   )

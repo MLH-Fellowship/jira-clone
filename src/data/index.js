@@ -1,9 +1,34 @@
 const data = [{
     id: 9,
-    icon: "⭕️",
     status: "Open",
+    icon: "⭕️",
     title: "nine",
-    content: "Get the modal working!"
+    content: "Get the modal working!",
+    comments:[{
+        user: 'userOne',
+        content:'FIRST!!!',
+        date:'10/10/20'
+    },{
+        user: 'userTwo',
+        content:'Good Job!',
+        date:'10/10/20'
+    }],
+    date:'10/02/20',
+    dueDate:'11/10/20',
+    assignee:'userOne',
+    reporter:'userTwo',
+    labels:['new feature request', 'v2.7.0'],
+    linkedIssues:[1,6],
+    activity:[{
+        user: 'userTwo',
+        date:'10/2/20',
+        action:'Created Issue'
+    },
+    {
+        user: 'userOne',
+        date:'10/4/20',
+        action:'Updated status: In Review'
+    }] 
 },{id:0, 
     title:'zero', 
     content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem', 

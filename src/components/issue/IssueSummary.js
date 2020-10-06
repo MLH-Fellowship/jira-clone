@@ -61,7 +61,7 @@ const IssueSummary =  ({ item, index, moveItem, status }) => {
                 
             </div>
             <IssueDetails
-                item={item}
+                issue={item}
                 onClose={onClose}
                 show={show}
             />
