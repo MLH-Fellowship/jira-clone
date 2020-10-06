@@ -1,38 +1,141 @@
-.App {
-  text-align: center;
+:root {
+  --primary-color: rgb(62, 100, 255);
+  --text-color: #172b4d;
+  --disabled-color: #fad6d6;
+  --background-color: #05507C;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+body {
+  color: var(--text-color);
+  font-family: sans-serif;
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+p {
+  margin: 10px 0;
+  overflow-wrap: break-word;
+  text-align: left;
+}
+
+button, input {
+  padding: 4px;
+  border: 1px solid var(--disabled-color);
+}
+
+button {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+button.active {
+  color: var(--primary-color);
+}
+
+button.active:after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  padding-top: 4px;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card {
+  font-size: 15px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+  background-color: white;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.card-asignee{
+  text-align: right;
+}
+.card-status{
+  text-align: right;
+  padding-left: 10px;
+}
+
+.drop-wrapper {
+  flex: 1 25%;
+  width: 100%;
+  height: 100%;
+}
+
+.list-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 20px 10px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 5px;
+  width:20%;
+  min-width: 150px;
+}
+
+.list-header {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-top: 0;
+  color:white;
+}
+
+.list {
+  min-height: 300px;
+}
+
+.modal {
+  background-color: #F4F5F7;
+  border-radius: 2px;
+  margin: 48px 0 80px;
+  min-height: 450px;
+  width: 800px;
+  outline: none;
+  padding: 20px;
+}
+
+.overlay {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);;
 }
 
-.App-link {
-  color: #61dafb;
+.close-btn {
+  font-size: 26px;
+  color: #ff0000;
+  font-weight: bold;
+  float: right;
+  border: none;
+  border-radius: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.close-btn:hover {
+  background-color: #DCDCDC;
 }
