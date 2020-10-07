@@ -1,15 +1,17 @@
 :root {
-  --primary-color: rgb(62, 100, 255);
   --text-color: #172b4d;
-  --disabled-color: #fad6d6;
-  --background-color: #05507C;
+  --background-color: #2d3843;
+  --light-color: #bcd3c2;
+  --accent-text-color: #e0e7b8;
+  /* --highlight-color: #d29484; */
+  --highlight-color: #dda697;
 }
-
 
 body {
   color: var(--text-color);
   font-family: sans-serif;
   margin: 0;
+  background-color: var(--light-color);
 }
 
 a {
@@ -26,18 +28,14 @@ h2 {
   margin: 0;
 }
 
-button, input {
+button,
+input {
   padding: 4px;
-  border: 1px solid var(--disabled-color);
+  border: 1px solid var(--highlight-color);
 }
 
 button {
-  color: var(--primary-color);
   cursor: pointer;
-}
-
-button.active {
-  color: var(--primary-color);
 }
 
 button.active:after {
@@ -46,7 +44,6 @@ button.active:after {
   margin: 0 auto;
   width: 50%;
   padding-top: 4px;
-  border-bottom: 1px solid var(--primary-color);
 }
 
 .row {
@@ -67,18 +64,12 @@ button.active:after {
 .card:hover {
   cursor: pointer;
 }
-
 .card-title {
   font-weight: 600;
   font-size: 16px;
 }
-
-.card-asignee{
-  text-align: right;
-}
-.card-status{
-  text-align: right;
-  padding-left: 10px;
+.card-asignee {
+  text-align: left;
 }
 
 .drop-wrapper {
@@ -94,7 +85,7 @@ button.active:after {
   padding: 20px;
   background-color: var(--background-color);
   border-radius: 5px;
-  width:20%;
+  width: 20%;
   min-width: 150px;
 }
 
@@ -103,7 +94,7 @@ button.active:after {
   font-weight: 600;
   margin-bottom: 20px;
   margin-top: 0;
-  color:white;
+  color: white;
 }
 
 .list {
@@ -111,7 +102,7 @@ button.active:after {
 }
 
 .modal {
-  background-color: #F4F5F7;
+  background-color: #f4f5f7;
   border-radius: 2px;
   margin: 48px 0 80px;
   min-height: 450px;
@@ -128,7 +119,7 @@ button.active:after {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.7);;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .close-btn {
@@ -141,33 +132,83 @@ button.active:after {
 }
 
 .close-btn:hover {
-  background-color: #DCDCDC;
+  background-color: #dcdcdc;
 }
 
 .issue-details {
   display: flex;
 }
-.issue-description{
+.issue-description {
   flex: 70%;
-  border:2px solid #172b4d;
+  border: 2px solid #172b4d;
   margin-right: 30px;
 }
-.issue-tools{
+.issue-tools {
   flex: 30%;
-  border:2px solid #172b4d;
+  border: 2px solid #172b4d;
 }
 
-.section-header{
+.section-header {
   background-color: var(--background-color);
-  color:white;
+  color: white;
   padding: 10px;
 }
-.section{
+.section {
   padding: 10px;
 }
-.label{
-  margin-right:20px;
+.label {
+  margin-right: 20px;
   padding: 10px;
   background-color: var(--background-color);
-  color:white;
+  color: white;
+}
+
+.status {
+  background-color: var(--highlight-color);
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--background-color);
+}
+
+li {
+  float: left;
+  font-size: 20px;
+}
+
+li a {
+  display: block;
+  color: var(--accent-text-color);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.form {
+  width: 50%;
+  margin: 30px auto;
+}
+.input {
+  width: 100%;
+  padding: 20px;
+}
+.submit {
+  width: 50%;
+  padding: 20px;
+}
+.submit:hover {
+  background-color: var(--highlight-color);
 }

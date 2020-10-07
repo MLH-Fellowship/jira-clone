@@ -1,12 +1,12 @@
-import React from 'react'
-import Modal from "react-modal"
-import IssueTools from '../issue/IssueTools'
-import IssueDescription from '../issue/IssueDescription'
+import React from "react";
+import Modal from "react-modal";
+import IssueTools from "../issue/IssueTools";
+import IssueDescription from "../issue/IssueDescription";
 
 Modal.setAppElement("#root");
 
 const IssueDetails = ({ show, onClose, issue }) => {
-  const {title, id} = issue
+  const { title, id } = issue;
   return (
     <div>
       <Modal
@@ -16,23 +16,26 @@ const IssueDetails = ({ show, onClose, issue }) => {
         overlayClassName={"overlay"}
       >
         <div className="">
-          <button className="close-btn" onClick={onClose}>X</button>
-          <h1 className='modal-title'>
-           <b> Issue#{id}</b>
-            <br/> {title}
+          <button className="close-btn" onClick={onClose}>
+            X
+          </button>
+
+          <h1 className="modal-title">
+            <b> Issue#{id}</b> - {title}
           </h1>
+          <span className={`card-status status`}>{issue.status}</span>
           <div class="issue-details">
             <div class="issue-description">
-              <IssueDescription issue={issue}/>
-            </div> 
+              <IssueDescription issue={issue} />
+            </div>
             <div class="issue-tools">
-              <IssueTools/>
+              <IssueTools />
             </div>
           </div>
         </div>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
 export default IssueDetails;
