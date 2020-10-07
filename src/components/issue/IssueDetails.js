@@ -5,7 +5,7 @@ import IssueDescription from "../issue/IssueDescription";
 
 Modal.setAppElement("#root");
 
-const IssueDetails = ({ show, onClose, issue }) => {
+const IssueDetails = ({ show, onClose, issue, users }) => {
   const { title, id } = issue;
   return (
     <div>
@@ -24,11 +24,11 @@ const IssueDetails = ({ show, onClose, issue }) => {
             <b> Issue#{id}</b> - {title}
           </h1>
           <span className={`card-status status`}>{issue.status}</span>
-          <div class="issue-details">
-            <div class="issue-description">
-              <IssueDescription issue={issue} />
+          <div className="issue-details">
+            <div className="issue-description">
+              <IssueDescription issue={issue} users={users} />
             </div>
-            <div class="issue-tools">
+            <div className="issue-tools">
               <IssueTools />
             </div>
           </div>

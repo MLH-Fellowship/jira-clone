@@ -9,15 +9,19 @@ import "./App.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import SignInPage from "./pages/SignIn";
-import Homepage from "./pages/Homepage";
+import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
+import CreateIssue from "./pages/CreateIssue";
 import Navbar from "./components/layout/Navbar";
+import { data, issueStatus, users } from "./data";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSignedIn: false,
+      isSignedIn: true,
+      issues: data,
+      users: users,
     };
   }
   signIn = (user) => {
@@ -31,6 +35,9 @@ class App extends Component {
   signUp = (user) => {
     window.alert(`Welcome ${user.firstName}`);
     this.signIn();
+  };
+  createIssue = (issue) => {
+    window.alert(`issue created`);
   };
 
   render() {
@@ -46,9 +53,9 @@ class App extends Component {
           <Switch>
             <Route path="/" exact>
               {this.state.isSignedIn ? (
-                <Homepage />
+                <Home issues={this.state.issues} users={this.state.users} />
               ) : (
-                <SignInPage signIn={this.signIn} />
+                <Redirect to={"/signin"} />
               )}
             </Route>
             <Route path="/signup">
@@ -63,6 +70,16 @@ class App extends Component {
                 <Redirect to={"/"} />
               ) : (
                 <SignInPage signIn={this.signIn} />
+              )}
+            </Route>
+            <Route path="/create">
+              {this.state.isSignedIn ? (
+                <CreateIssue
+                  createIssue={this.createIssue}
+                  users={this.state.users}
+                />
+              ) : (
+                <Redirect to={"/signin"} />
               )}
             </Route>
           </Switch>

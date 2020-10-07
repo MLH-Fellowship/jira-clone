@@ -4,6 +4,7 @@ function SignUp({ signUp }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [team, setTeam] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -15,6 +16,9 @@ function SignUp({ signUp }) {
       email,
       password,
     };
+    if (team !== "") {
+      user.team = team;
+    }
     if (password === confirmPassword) {
       signUp(user);
     } else {
@@ -52,6 +56,14 @@ function SignUp({ signUp }) {
           type="email"
           name="email"
           required
+        />
+        <input
+          className="input"
+          value={team}
+          onChange={(e) => setTeam(e.target.value)}
+          placeholder="Team"
+          type="text"
+          name="team"
         />
         <input
           className="input"

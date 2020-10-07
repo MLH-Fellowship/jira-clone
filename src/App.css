@@ -212,3 +212,12 @@ li a:hover:not(.active) {
 .submit:hover {
   background-color: var(--highlight-color);
 }
+
+.checkbox-wrapper {
+  background: white;
+  font-size: 14px;
+  color: #757575;
+  width: 100%;
+  padding: 10px 20px;
+  border: 1px solid var(--highlight-color);
+}

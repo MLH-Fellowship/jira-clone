@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import IssueDetails from "./IssueDetails";
 import ITEM_TYPE from "../../data/types";
 
-const IssueSummary = ({ item, index, moveItem }) => {
+const IssueSummary = ({ item, index, moveItem, users }) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
@@ -46,7 +46,17 @@ const IssueSummary = ({ item, index, moveItem }) => {
   const onClose = () => setShow(false);
   drag(drop(ref));
 
-  const assignedTo = item.assignee ? `${item.assignee}` : "Unassigned";
+  let assignedTo;
+  if (item.assignee) {
+    users.filter((user) => {
+      if (user.id.toString() === item.assignee.toString()) {
+        assignedTo = `${user.firstName} ${user.lastName}`;
+      }
+    });
+  } else {
+    assignedTo = "Unassigned";
+  }
+
   return (
     <Fragment>
       <div
@@ -62,7 +72,7 @@ const IssueSummary = ({ item, index, moveItem }) => {
           <i>{assignedTo}</i>
         </p>
       </div>
-      <IssueDetails issue={item} onClose={onClose} show={show} />
+      <IssueDetails issue={item} onClose={onClose} show={show} users={users} />
     </Fragment>
   );
 };
