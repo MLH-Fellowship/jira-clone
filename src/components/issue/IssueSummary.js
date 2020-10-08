@@ -3,7 +3,14 @@ import { useDrag, useDrop } from "react-dnd";
 import IssueDetails from "./IssueDetails";
 import ITEM_TYPE from "../../data/types";
 
-const IssueSummary = ({ item, index, moveItem, users }) => {
+const IssueSummary = ({
+  item,
+  index,
+  moveItem,
+  users,
+  updateIssue,
+  userId,
+}) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
@@ -72,7 +79,14 @@ const IssueSummary = ({ item, index, moveItem, users }) => {
           <i>{assignedTo}</i>
         </p>
       </div>
-      <IssueDetails issue={item} onClose={onClose} show={show} users={users} />
+      <IssueDetails
+        issue={item}
+        onClose={onClose}
+        show={show}
+        users={users}
+        updateIssue={updateIssue}
+        userId={userId}
+      />
     </Fragment>
   );
 };

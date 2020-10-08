@@ -4,7 +4,7 @@ import DropWrapper from "../components/issue/DropWrapper";
 import IssueList from "../components/issue/IssueList";
 import { data, issueStatus } from "../data";
 
-const Home = ({ issues, users }) => {
+const Home = ({ issues, users, updateIssue, userId }) => {
   const [items, setItems] = useState(issues);
 
   const onDrop = (item, monitor, status) => {
@@ -46,6 +46,8 @@ const Home = ({ issues, users }) => {
                       moveItem={moveItem}
                       status={s}
                       users={users}
+                      updateIssue={updateIssue}
+                      userId={userId}
                     />
                   ))}
               </IssueList>

@@ -30,7 +30,7 @@ const CreateIssuePage = ({ createIssue, users }) => {
       issue.assignee = assignee;
     }
     if (useDueDate) {
-      issue.dueDate = dateFormat(dueDate, "dddd mm/dd/yy h:MM TT");
+      issue.dueDate = dateFormat(dueDate, "dddd mm/dd/yy");
     }
     console.log(issue);
     createIssue(issue);
@@ -98,7 +98,6 @@ const CreateIssuePage = ({ createIssue, users }) => {
               ))}
           </select>
         </div>
-
         <br />
 
         {/* TODO:  linked issues */}

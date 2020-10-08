@@ -20,13 +20,15 @@ class App extends Component {
     super(props);
     this.state = {
       isSignedIn: true,
+      userId: 0,
       issues: data,
       users: users,
     };
   }
   signIn = (user) => {
     window.alert(`${user.email} is signed in!`);
-    this.setState({ isSignedIn: true });
+    //we will want to save the user id of the logged in user to the state
+    this.setState({ isSignedIn: true, userId: 1 });
     return <Redirect to="/" />;
   };
   signOut = () => {
@@ -38,6 +40,10 @@ class App extends Component {
   };
   createIssue = (issue) => {
     window.alert(`issue created`);
+  };
+  updateIssue = (issue) => {
+    console.log("updat issue", issue);
+    window.alert(`issue was updated`);
   };
 
   render() {
@@ -53,7 +59,12 @@ class App extends Component {
           <Switch>
             <Route path="/" exact>
               {this.state.isSignedIn ? (
-                <Home issues={this.state.issues} users={this.state.users} />
+                <Home
+                  issues={this.state.issues}
+                  users={this.state.users}
+                  updateIssue={this.updateIssue}
+                  userId={this.state.userId}
+                />
               ) : (
                 <Redirect to={"/signin"} />
               )}
