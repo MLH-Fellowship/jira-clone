@@ -11,8 +11,8 @@ function SignUp({ signUp }) {
   const onSubmit = (e) => {
     e.preventDefault();
     const user = {
-      firstName,
-      lastName,
+      first_name: firstName,
+      last_name: lastName,
       email,
       password,
     };

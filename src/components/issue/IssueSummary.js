@@ -10,6 +10,8 @@ const IssueSummary = ({
   users,
   updateIssue,
   userId,
+  deleteIssue,
+  addComment,
 }) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -57,7 +59,7 @@ const IssueSummary = ({
   if (item.assignee) {
     users.filter((user) => {
       if (user.id.toString() === item.assignee.toString()) {
-        assignedTo = `${user.firstName} ${user.lastName}`;
+        assignedTo = `${user.first_name} ${user.last_name}`;
       }
     });
   } else {
@@ -86,6 +88,8 @@ const IssueSummary = ({
         users={users}
         updateIssue={updateIssue}
         userId={userId}
+        deleteIssue={deleteIssue}
+        addComment={addComment}
       />
     </Fragment>
   );

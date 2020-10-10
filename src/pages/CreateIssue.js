@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 var dateFormat = require("dateformat");
 var now = new Date();
 
-const CreateIssuePage = ({ createIssue, users }) => {
+const CreateIssuePage = ({ createIssue, users, userId }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [assignee, setAssignee] = useState("");
@@ -20,7 +20,7 @@ const CreateIssuePage = ({ createIssue, users }) => {
       title,
       content: description,
       status: "Open",
-      reporter: "current user",
+      reporter: userId,
       date: dateFormat(now, "dddd mm/dd/yy h:MM TT"),
     };
     if (label) {
@@ -30,9 +30,8 @@ const CreateIssuePage = ({ createIssue, users }) => {
       issue.assignee = assignee;
     }
     if (useDueDate) {
-      issue.dueDate = dateFormat(dueDate, "dddd mm/dd/yy");
+      issue.due_date = dateFormat(dueDate, "dddd mm/dd/yy");
     }
-    console.log(issue);
     createIssue(issue);
   };
   return (

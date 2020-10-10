@@ -27,6 +27,9 @@ p {
 h2 {
   margin: 0;
 }
+h1 {
+  margin: 0;
+}
 
 button,
 input {
@@ -124,7 +127,7 @@ button.active:after {
 
 .close-btn {
   font-size: 26px;
-  color: #ff0000;
+  color: #963a0d;
   font-weight: bold;
   float: right;
   border: none;
@@ -154,7 +157,8 @@ button.active:after {
   padding: 10px;
 }
 .section {
-  padding: 10px;
+  padding: 15px;
+  font-size: 18px;
 }
 .label {
   margin-right: 20px;
@@ -165,11 +169,20 @@ button.active:after {
 
 .status {
   background-color: var(--highlight-color);
+}
+.assignedTo {
+  background-color: var(--accent-text-color);
+}
+.due {
+  background-color: var(--light-color);
+}
+.pill {
   color: var(--text-color);
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
+  border: 2px solid var(--text-color);
 }
 
 ul {
@@ -207,10 +220,18 @@ li a:hover:not(.active) {
 }
 .submit {
   width: 50%;
-  padding: 20px;
+  padding: 15px;
+  background-color: var(--highlight-color);
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  font-weight: bold;
+}
+.disabledBtn {
+  width: 50%;
+  padding: 15px;
 }
 .submit:hover {
-  background-color: var(--highlight-color);
+  background-color: var(--light-color);
 }
 
 .checkbox-wrapper {
@@ -226,4 +247,8 @@ li a:hover:not(.active) {
   min-height: 50px;
   width: 90%;
   margin: 2%;
+}
+
+.highlight-region {
+  background-color: var(--highlight-color);
 }

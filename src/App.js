@@ -20,30 +20,125 @@ class App extends Component {
     super(props);
     this.state = {
       isSignedIn: true,
-      userId: 0,
-      issues: data,
+      userId: 1,
+      // issues: data,
       users: users,
+      project_id: 1,
+      issues: [],
+      // users: []
     };
   }
+
+  componentDidMount() {
+    if (!this.state.users) {
+      fetch("/users")
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              users: result,
+            });
+          },
+          (error) => {
+            // how to handel this error?
+            this.setState({
+              isLoaded: true,
+              error,
+            });
+          }
+        );
+    }
+
+    // fetch("/tickets/1")
+    // .then(res => res.json())
+    // .then(
+    //   (result) => {
+    //     this.setState({
+    //       issues: result
+    //     });
+    //   },
+    //   (error) => {
+    //     // how to handel this error?
+    //     this.setState({
+    //       isLoaded: true,
+    //       error
+    //     });
+    //   }
+    // )
+  }
+
   signIn = (user) => {
     window.alert(`${user.email} is signed in!`);
-    //we will want to save the user id of the logged in user to the state
     this.setState({ isSignedIn: true, userId: 1 });
-    return <Redirect to="/" />;
+
+    fetch("/users/1")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            user: result,
+            userId: result.id,
+          });
+          return <Redirect to="/" />;
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
   };
   signOut = () => {
-    this.setState({ isSignedIn: false });
+    this.setState({ isSignedIn: false, user: {}, userId: 0 });
   };
   signUp = (user) => {
     window.alert(`Welcome ${user.firstName}`);
     this.signIn();
   };
   createIssue = (issue) => {
+    //post issue
     window.alert(`issue created`);
   };
   updateIssue = (issue) => {
+    // put issue
     console.log("updat issue", issue);
     window.alert(`issue was updated`);
+  };
+  addComment = (comment) => {
+    console.log(comment);
+    let newComment = {
+      user_id: comment.user,
+      project_id: 1,
+      ticket_id: comment.issue,
+      content: comment.content,
+      created_at: comment.date,
+    };
+    console.log(newComment);
+    fetch("/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+    window.alert(`comment added`);
+  };
+  deleteIssue = (issue) => {
+    // delete issue
+    window.alert(`issue was deleted`);
   };
 
   render() {
@@ -64,6 +159,8 @@ class App extends Component {
                   users={this.state.users}
                   updateIssue={this.updateIssue}
                   userId={this.state.userId}
+                  deleteIssue={this.deleteIssue}
+                  addComment={this.addComment}
                 />
               ) : (
                 <Redirect to={"/signin"} />
@@ -88,6 +185,7 @@ class App extends Component {
                 <CreateIssue
                   createIssue={this.createIssue}
                   users={this.state.users}
+                  userId={this.state.userId}
                 />
               ) : (
                 <Redirect to={"/signin"} />

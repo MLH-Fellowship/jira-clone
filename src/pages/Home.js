@@ -4,16 +4,40 @@ import DropWrapper from "../components/issue/DropWrapper";
 import IssueList from "../components/issue/IssueList";
 import { data, issueStatus } from "../data";
 
-const Home = ({ issues, users, updateIssue, userId }) => {
+const Home = ({
+  issues,
+  users,
+  updateIssue,
+  userId,
+  deleteIssue,
+  addComment,
+}) => {
   const [items, setItems] = useState(issues);
-
+  if (!items || items.length === 0) {
+    fetch("/tickets/1")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setItems(result);
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
   const onDrop = (item, monitor, status) => {
-    const mapping = issueStatus.find((si) => si.status === status);
-
+    console.log(status);
+    const mapping = issueStatus.find((si) => si.id === status);
+    console.log("map", mapping);
+    console.log(item, "item");
     setItems((prevState) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
-        .concat({ ...item, status, icon: mapping.icon });
+        .concat({ ...item, status_id: status });
       return [...newItems];
     });
     // TODO: make call here to update the issues status/index in the database
@@ -34,20 +58,22 @@ const Home = ({ issues, users, updateIssue, userId }) => {
         return (
           <div key={s.status} className={"list-wrapper"}>
             <h2 className={"list-header"}>{s.status.toUpperCase()}</h2>
-            <DropWrapper onDrop={onDrop} status={s.status}>
+            <DropWrapper onDrop={onDrop} status={s}>
               <IssueList>
                 {items
-                  .filter((i) => i.status === s.status)
+                  .filter((i) => i.status_id === s.id)
                   .map((i, idx) => (
                     <IssueSummary
                       key={i.id}
                       item={i}
                       index={idx}
                       moveItem={moveItem}
-                      status={s}
+                      // status={s.id}
                       users={users}
                       updateIssue={updateIssue}
                       userId={userId}
+                      deleteIssue={deleteIssue}
+                      addComment={addComment}
                     />
                   ))}
               </IssueList>

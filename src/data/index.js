@@ -17,7 +17,7 @@ const data = [
       },
     ],
     date: "Wednesday 10/07/20 1:46 PM",
-    dueDate: "Wednesday 10/14/20 12:00 PM",
+    due_date: "Wednesday 10/14/20",
     reporter: "userTwo",
     label: "new feature request",
     linkedIssues: [1, 6],
@@ -28,7 +28,7 @@ const data = [
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem",
     date: "Thursday 10/08/20 1:46 PM",
-    dueDate: "Thursday 10/15/20 12:00 PM",
+    due_date: "Thursday 10/15/20",
     status: "Open",
   },
   {
@@ -37,7 +37,7 @@ const data = [
     content: "The quick brown fox jumped ovee the lazy dog.",
     assignee: "003",
     date: "Friday 10/09/20 11:46 PM",
-    dueDate: "Firday 10/16/20 12:00 PM",
+    due_date: "Firday 10/16/20",
     status: "In Review",
   },
   {
@@ -91,48 +91,48 @@ const data = [
 const issueStatus = [
   {
     status: "Open",
-    color: "#EB5A46",
+    id: 1,
   },
   {
     status: "In Progress",
-    color: "#00C2E0",
+    id: 2,
   },
   {
     status: "In Review",
-    color: "#C377E0",
+    id: 3,
   },
   {
     status: "Closed",
-    color: "#3981DE",
+    id: 4,
   },
 ];
 
 const users = [
   {
     id: "001",
-    firstName: "Ella",
-    lastName: "Fitzgerald",
+    first_name: "Ella",
+    last_name: "Fitzgerald",
     team: "Lyrical Lynxes",
     email: "ef@text.email",
   },
   {
     id: "002",
-    firstName: "Johnny",
-    lastName: "Cash",
+    first_name: "Johnny",
+    last_name: "Cash",
     team: "Lyrical Lynxes",
     email: "ef@text.email",
   },
   {
     id: "003",
-    firstName: "Lady",
-    lastName: "Gga",
+    first_name: "Lady",
+    last_name: "Gga",
     team: "Lyrical Lynxes",
     email: "lg@text.email",
   },
   {
     id: "004",
-    firstName: "Yo-Yo",
-    lastName: "Ma",
+    first_name: "Yo-Yo",
+    last_name: "Ma",
     team: "Lyrical Lynxes",
     email: "ym@text.email",
   },
