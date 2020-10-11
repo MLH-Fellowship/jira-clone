@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const IssueDescription = ({ issue, users }) => {
-  const { comments, content, id, title, status, label } = issue;
+const IssueDescription = ({
+  issue,
+  users,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
+}) => {
+  const { description, id, title, status, label } = issue;
+  const statusMap = {
+    1: "Open",
+    2: "In Progress",
+    3: "In Review",
+    4: "Closed",
+  };
+  const [comments, setComments] = useState([]);
+  console.log(users);
+  useEffect(() => {
+    fetch("/comments", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setComments(result);
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }, []);
 
   let assignedTo;
   let user = "";
-  if (issue.assignee) {
-    user = users.find(({ id }) => id === issue.assignee);
+  if (issue.user_id) {
+    user = users.find(({ id }) => id === issue.user_id);
   }
   if (user !== "") {
     assignedTo = `Assigned to: ${user.first_name} ${user.last_name}`;
@@ -20,7 +56,7 @@ const IssueDescription = ({ issue, users }) => {
     let commentUser = "";
     let user = "";
     user = users.find(({ id }) => id === commenter);
-    if (user !== "") {
+    if (user && user !== "") {
       commentUser = `${user.first_name} ${user.last_name}`;
     }
     return (commentUser = "" ? `unknown user` : commentUser);
@@ -34,9 +70,9 @@ const IssueDescription = ({ issue, users }) => {
         </b>
       </h1>
       <div className="section">
-        <p>{content}</p>
+        <p>{description}</p>
         <div style={{ margin: "25px 0 20px" }}>
-          <span className="status pill">{issue.status}</span>
+          <span className="status pill">{statusMap[issue.status_id]}</span>
           <span className="assignedTo pill">{assignedTo}</span>
           <span className="due pill">{dueDate}</span>
         </div>
@@ -47,11 +83,11 @@ const IssueDescription = ({ issue, users }) => {
           comments.length > 0 &&
           comments.map((comment, idx) => {
             return (
-              <div key={idx + comment.date}>
+              <div key={idx + comment.created_at}>
                 <p>
-                  <i>{comment.date}</i>
+                  <i>{comment.created_at}</i>
                   {" - "}
-                  {getCommenter(comment.user)}
+                  {getCommenter(comment.user_id)}
                 </p>
                 <p style={{ paddingLeft: "30px" }}>{comment.content}</p>
               </div>

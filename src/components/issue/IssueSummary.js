@@ -12,6 +12,11 @@ const IssueSummary = ({
   userId,
   deleteIssue,
   addComment,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
 }) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -56,9 +61,9 @@ const IssueSummary = ({
   drag(drop(ref));
 
   let assignedTo;
-  if (item.assignee) {
+  if (item.user_id) {
     users.filter((user) => {
-      if (user.id.toString() === item.assignee.toString()) {
+      if (user.id.toString() === item.user_id.toString()) {
         assignedTo = `${user.first_name} ${user.last_name}`;
       }
     });
@@ -86,7 +91,11 @@ const IssueSummary = ({
         onClose={onClose}
         show={show}
         users={users}
-        updateIssue={updateIssue}
+        updateStatus={updateStatus}
+        updateTitle={updateTitle}
+        updateDescription={updateDescription}
+        updateAssignee={updateAssignee}
+        updateDueDate={updateDueDate}
         userId={userId}
         deleteIssue={deleteIssue}
         addComment={addComment}

@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 var dateFormat = require("dateformat");
 var now = new Date();
 
-const CreateIssuePage = ({ createIssue, users, userId }) => {
+const CreateIssuePage = ({ createIssue, users, userId, project_id }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [assignee, setAssignee] = useState("");
@@ -15,28 +15,25 @@ const CreateIssuePage = ({ createIssue, users, userId }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // TODO gotta save the current user's name in state to use here
     const issue = {
+      project_id: 1,
+      status_id: 1,
       title,
-      content: description,
-      status: "Open",
-      reporter: userId,
-      date: dateFormat(now, "dddd mm/dd/yy h:MM TT"),
+      user_id: 1,
+      description: description,
     };
-    if (label) {
-      issue.label = label;
-    }
     if (assignee) {
-      issue.assignee = assignee;
+      console.log(assignee, "create assigneee");
+      issue.user_id = assignee;
     }
     if (useDueDate) {
-      issue.due_date = dateFormat(dueDate, "dddd mm/dd/yy");
+      issue.due_date = dateFormat(dueDate, "yyyy/mm/dd");
     }
     createIssue(issue);
   };
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>New Issue</h1>
+      <h1 style={{ textAlign: "center", marginTop: "30px" }}>New Issue</h1>
       <form onSubmit={(e) => onSubmit(e)} className="form">
         <p>Required:</p>
         <input
@@ -58,14 +55,6 @@ const CreateIssuePage = ({ createIssue, users, userId }) => {
           required
         />
         <p style={{ marginTop: "20px" }}>Optional:</p>
-        <input
-          className="input"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          placeholder="Label"
-          type="textarea"
-          name="label"
-        />
         <div className="checkbox-wrapper">
           <p style={{ float: "left" }}>Set due date: </p>
           <input
@@ -92,15 +81,17 @@ const CreateIssuePage = ({ createIssue, users, userId }) => {
             {users &&
               users.map((user) => (
                 <option value={user.id} key={user.id}>
-                  {user.firstName} {user.lastName}
+                  {user.first_name} {user.last_name}
                 </option>
               ))}
           </select>
         </div>
         <br />
-
-        {/* TODO:  linked issues */}
-        <button className="submit" type="submit" style={{ marginTop: "20px" }}>
+        <button
+          className="create-issue"
+          type="submit"
+          style={{ marginTop: "20px" }}
+        >
           Submit
         </button>
       </form>

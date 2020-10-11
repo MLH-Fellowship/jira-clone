@@ -11,6 +11,11 @@ const Home = ({
   userId,
   deleteIssue,
   addComment,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
 }) => {
   const [items, setItems] = useState(issues);
   if (!items || items.length === 0) {
@@ -22,25 +27,35 @@ const Home = ({
         },
         (error) => {
           // how to handel this error?
-          this.setState({
-            isLoaded: true,
-            error,
-          });
+          console.log(error);
         }
       );
   }
   const onDrop = (item, monitor, status) => {
     console.log(status);
-    const mapping = issueStatus.find((si) => si.id === status);
-    console.log("map", mapping);
-    console.log(item, "item");
+    // const mapping = issueStatus.find((si) => si.id === status);
     setItems((prevState) => {
       const newItems = prevState
         .filter((i) => i.id !== item.id)
         .concat({ ...item, status_id: status });
       return [...newItems];
     });
-    // TODO: make call here to update the issues status/index in the database
+
+    fetch(`/ticket/${item.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status_id: status }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
   };
 
   const moveItem = (dragIndex, hoverIndex) => {
@@ -70,7 +85,11 @@ const Home = ({
                       moveItem={moveItem}
                       // status={s.id}
                       users={users}
-                      updateIssue={updateIssue}
+                      updateStatus={updateStatus}
+                      updateTitle={updateTitle}
+                      updateDescription={updateDescription}
+                      updateAssignee={updateAssignee}
+                      updateDueDate={updateDueDate}
                       userId={userId}
                       deleteIssue={deleteIssue}
                       addComment={addComment}

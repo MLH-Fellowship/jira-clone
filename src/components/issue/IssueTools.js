@@ -12,6 +12,11 @@ const IssueTools = ({
   userId,
   deleteIssue,
   addComment,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
 }) => {
   const [assignee, setAssignee] = useState("");
   const [comment, setComment] = useState("");
@@ -20,39 +25,37 @@ const IssueTools = ({
   const [dueDate, setDueDate] = useState(new Date());
   const [useDueDate, setUseDueDate] = useState(false);
   const [title, setTitle] = useState(issue.title);
-  const [description, setDescription] = useState(issue.content);
+  const [description, setDescription] = useState(issue.description);
   const [showComment, setShowComment] = useState(true);
   const [showUpdate, setShowUpdate] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [deleteIssueIsChecked, setDeleteIssueIsChecked] = useState(false);
   const [enableSubmitBtn, setEnableSubmitBtb] = useState(false);
 
+  const statusMap = { Open: 1, "In Progress": 2, "In Review": 3, Closed: 4 };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    const updatedIssue = {
-      id: issue.id,
-    };
+
     if (assignee !== "") {
-      updatedIssue.assignee = assignee;
+      console.log(assignee);
+      updateAssignee(issue.id, assignee);
     }
-    if (comment !== "") {
-      let commentDate = dateFormat(now, "dddd mm/dd/yy h:MM TT");
-      let comm = { content: comment, user: userId, date: commentDate };
-      updatedIssue.comment = comm;
-    }
-    if (status !== "") {
-      updatedIssue.status = status;
+    if (status !== "" && status !== issue.status) {
+      issue.status_id = statusMap[status];
+      updateStatus(issue.id, statusMap[status]);
     }
     if (useDueDate === true && dueDate !== "") {
-      updatedIssue.dueDate = dateFormat(dueDate, "dddd mm/dd/yy");
+      const due_date = dateFormat(dueDate, "yyyy/mm/dd");
+      console.log(issue.id, due_date);
+      updateDueDate(issue.id, due_date);
     }
     if (title !== issue.title) {
-      updatedIssue.title = title;
+      updateTitle(issue.id, title);
     }
-    if (description !== issue.content) {
-      updatedIssue.content = description;
+    if (description !== issue.description) {
+      updateDescription(issue.id, description);
     }
-    updateIssue(updatedIssue);
   };
 
   const onCommentSubmit = (e) => {
@@ -61,7 +64,7 @@ const IssueTools = ({
       let commentDate = dateFormat(now, "dddd mm/dd/yy h:MM TT");
       let comm = {
         content: comment,
-        user: userId,
+        user_id: "001",
         date: commentDate,
         issue: issue.id,
       };
@@ -110,16 +113,25 @@ const IssueTools = ({
   return (
     <div style={{ width: "100%" }}>
       <h2 className="section-header">Tools</h2>
-      <div style={{ marginTop: "13px" }}>
-        <span className="pill" onClick={() => setTab("showComment")}>
+      <div style={{ marginTop: "0", columnCount: "3", columnGap: "0" }}>
+        <p
+          className={showComment ? "tool show" : "tool"}
+          onClick={() => setTab("showComment")}
+        >
           Comment
-        </span>
-        <span className="pill" onClick={() => setTab("showUpdate")}>
+        </p>
+        <p
+          className={showUpdate ? "tool show" : "tool"}
+          onClick={() => setTab("showUpdate")}
+        >
           Update
-        </span>
-        <span className="pill" onClick={() => setTab("showDelete")}>
+        </p>
+        <p
+          className={showDelete ? "tool show" : "tool"}
+          onClick={() => setTab("showDelete")}
+        >
           Delete
-        </span>
+        </p>
       </div>
       <div className="section" style={{ marginTop: "15px" }}>
         {showComment && (
@@ -215,10 +227,11 @@ const IssueTools = ({
                   onChange={(dueDate) => setDueDate(dueDate)}
                 />
               )}
+              <br />
               <button
                 disabled={disableBtn}
                 className={disableBtn ? "disabledBtn" : "submit"}
-                style={{ margin: "10px 0" }}
+                style={{ margin: "10px 0", clear: "both" }}
                 onClick={onSubmit}
               >
                 Submit

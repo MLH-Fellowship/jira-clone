@@ -14,6 +14,11 @@ const IssueDetails = ({
   userId,
   deleteIssue,
   addComment,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
 }) => {
   const { title, id } = issue;
   return (
@@ -37,7 +42,11 @@ const IssueDetails = ({
             <div className="issue-tools">
               <IssueTools
                 users={users}
-                updateIssue={updateIssue}
+                updateStatus={updateStatus}
+                updateTitle={updateTitle}
+                updateDescription={updateDescription}
+                updateAssignee={updateAssignee}
+                updateDueDate={updateDueDate}
                 issue={issue}
                 userId={userId}
                 deleteIssue={deleteIssue}

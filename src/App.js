@@ -22,49 +22,33 @@ class App extends Component {
       isSignedIn: true,
       userId: 1,
       // issues: data,
-      users: users,
+      // users: users,
       project_id: 1,
       issues: [],
-      // users: []
+      users: [],
     };
   }
 
   componentDidMount() {
-    if (!this.state.users) {
-      fetch("/users")
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            this.setState({
-              users: result,
-            });
-          },
-          (error) => {
-            // how to handel this error?
-            this.setState({
-              isLoaded: true,
-              error,
-            });
-          }
-        );
-    }
-
-    // fetch("/tickets/1")
-    // .then(res => res.json())
-    // .then(
-    //   (result) => {
-    //     this.setState({
-    //       issues: result
-    //     });
-    //   },
-    //   (error) => {
-    //     // how to handel this error?
-    //     this.setState({
-    //       isLoaded: true,
-    //       error
-    //     });
-    //   }
-    // )
+    // if (!this.state.users || this.state.users.length > 1) {
+    console.log("?????");
+    fetch("/users")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            users: result,
+          });
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+    // }
   }
 
   signIn = (user) => {
@@ -97,25 +81,128 @@ class App extends Component {
     window.alert(`Welcome ${user.firstName}`);
     this.signIn();
   };
+
   createIssue = (issue) => {
-    //post issue
-    window.alert(`issue created`);
+    console.log("create from app", issue);
+    fetch(`/ticket`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ issue }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
+    // window.alert(`issue created`);
   };
-  updateIssue = (issue) => {
-    // put issue
-    console.log("updat issue", issue);
-    window.alert(`issue was updated`);
+
+  updateStatus = (id, status_id) => {
+    console.log(id, status_id);
+    fetch(`/ticket/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status_id }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
   };
+
+  updateTitle = (id, title) => {
+    fetch(`/ticket/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
+  };
+
+  updateDescription = (id, description) => {
+    fetch(`/ticket/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ description }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
+  };
+
+  updateAssignee = (id, assignee) => {
+    console.log("here", id, assignee);
+    fetch(`/ticket/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: assignee }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
+  };
+
+  updateDueDate = (id, due_date) => {
+    fetch(`/ticket/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ due_date }),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
+  };
+
   addComment = (comment) => {
-    console.log(comment);
     let newComment = {
-      user_id: comment.user,
+      user_id: comment.user_id,
       project_id: 1,
       ticket_id: comment.issue,
       content: comment.content,
       created_at: comment.date,
     };
-    console.log(newComment);
+
     fetch("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -136,9 +223,21 @@ class App extends Component {
       );
     window.alert(`comment added`);
   };
-  deleteIssue = (issue) => {
-    // delete issue
-    window.alert(`issue was deleted`);
+  deleteIssue = (id) => {
+    fetch(`/ticket/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          console.log(error);
+        }
+      );
   };
 
   render() {
@@ -157,7 +256,11 @@ class App extends Component {
                 <Home
                   issues={this.state.issues}
                   users={this.state.users}
-                  updateIssue={this.updateIssue}
+                  updateStatus={this.updateStatus}
+                  updateTitle={this.updateTitle}
+                  updateDescription={this.updateDescription}
+                  updateAssignee={this.updateAssignee}
+                  updateDueDate={this.updateDueDate}
                   userId={this.state.userId}
                   deleteIssue={this.deleteIssue}
                   addComment={this.addComment}
@@ -186,6 +289,7 @@ class App extends Component {
                   createIssue={this.createIssue}
                   users={this.state.users}
                   userId={this.state.userId}
+                  project_id={this.state.project_id}
                 />
               ) : (
                 <Redirect to={"/signin"} />
