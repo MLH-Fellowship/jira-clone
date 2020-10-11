@@ -52,7 +52,6 @@ class App extends Component {
   }
 
   signIn = (user) => {
-    window.alert(`${user.email} is signed in!`);
     this.setState({ isSignedIn: true, userId: 1 });
 
     fetch("/users/1")
@@ -78,7 +77,6 @@ class App extends Component {
     this.setState({ isSignedIn: false, user: {}, userId: 0 });
   };
   signUp = (user) => {
-    window.alert(`Welcome ${user.firstName}`);
     this.signIn();
   };
 
@@ -99,7 +97,6 @@ class App extends Component {
           console.log(error);
         }
       );
-    // window.alert(`issue created`);
   };
 
   updateStatus = (id, status_id) => {
@@ -221,7 +218,6 @@ class App extends Component {
           });
         }
       );
-    window.alert(`comment added`);
   };
   deleteIssue = (id) => {
     fetch(`/ticket/${id}`, {

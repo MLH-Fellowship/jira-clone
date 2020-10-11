@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 var dateFormat = require("dateformat");
 var now = new Date();
 
@@ -56,6 +59,7 @@ const IssueTools = ({
     if (description !== issue.description) {
       updateDescription(issue.id, description);
     }
+    toast.dark(`Ticket Updated`);
   };
 
   const onCommentSubmit = (e) => {
@@ -69,12 +73,14 @@ const IssueTools = ({
         issue: issue.id,
       };
       addComment(comm);
+      toast.dark(`Comment created`);
     }
   };
 
   const onDeleteIssueSubmit = (e) => {
     e.preventDefault();
     deleteIssue(issue.id);
+    toast.dark(`Ticket Deleted`);
   };
   const setTab = (value) => {
     switch (value) {
@@ -105,7 +111,7 @@ const IssueTools = ({
     comment === "" &&
     !useDueDate &&
     title === issue.title &&
-    description === issue.content &&
+    description === issue.description &&
     status === ""
       ? true
       : false;
@@ -262,6 +268,7 @@ const IssueTools = ({
           </>
         )}
       </div>
+      <ToastContainer autoClose={3000} position="top-center" />
     </div>
   );
 };

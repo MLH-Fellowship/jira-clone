@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 var dateFormat = require("dateformat");
 var now = new Date();
 
@@ -23,12 +26,12 @@ const CreateIssuePage = ({ createIssue, users, userId, project_id }) => {
       description: description,
     };
     if (assignee) {
-      console.log(assignee, "create assigneee");
       issue.user_id = assignee;
     }
     if (useDueDate) {
       issue.due_date = dateFormat(dueDate, "yyyy/mm/dd");
     }
+    toast.dark(`Ticket Created`);
     createIssue(issue);
   };
   return (
@@ -95,6 +98,7 @@ const CreateIssuePage = ({ createIssue, users, userId, project_id }) => {
           Submit
         </button>
       </form>
+      <ToastContainer autoClose={3000} position="top-center" />
     </>
   );
 };
