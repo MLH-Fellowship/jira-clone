@@ -155,7 +155,7 @@ class App extends Component {
   };
 
   updateAssignee = (id, assignee) => {
-    console.log("here", id, assignee);
+    // console.log("here", id, assignee);
     fetch(`/ticket/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

@@ -20,6 +20,11 @@ const IssueTools = ({
   updateDescription,
   updateAssignee,
   updateDueDate,
+  setDisplayTitle,
+  setDisplayDescription,
+  setDisplayStatus,
+  setDisplayAssignee,
+  setDisplayDueDate,
 }) => {
   const [assignee, setAssignee] = useState("");
   const [comment, setComment] = useState("");
@@ -41,25 +46,30 @@ const IssueTools = ({
     e.preventDefault();
 
     if (assignee !== "") {
-      console.log(assignee);
+      console.log("????", assignee);
+      setDisplayAssignee(assignee);
       updateAssignee(issue.id, assignee);
     }
     if (status !== "" && status !== issue.status) {
       issue.status_id = statusMap[status];
+      setDisplayStatus(issue.status_id);
       updateStatus(issue.id, statusMap[status]);
     }
     if (useDueDate === true && dueDate !== "") {
       const due_date = dateFormat(dueDate, "yyyy/mm/dd");
-      console.log(issue.id, due_date);
+      // console.log(issue.id, due_date);
+      setDisplayDueDate(due_date);
       updateDueDate(issue.id, due_date);
     }
     if (title !== issue.title) {
+      setDisplayTitle(title);
       updateTitle(issue.id, title);
     }
     if (description !== issue.description) {
+      setDisplayDescription(description);
       updateDescription(issue.id, description);
     }
-    toast.dark(`Ticket Updated`);
+    // toast.dark(`Ticket Updated`);
   };
 
   const onCommentSubmit = (e) => {

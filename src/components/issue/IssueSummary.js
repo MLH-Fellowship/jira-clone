@@ -60,17 +60,23 @@ const IssueSummary = ({
   const onClose = () => setShow(false);
   drag(drop(ref));
 
+  const { title, id, description, status_id, user_id, due_date } = item;
+  const [displayTitle, setDisplayTitle] = useState(title);
+  const [displayDescription, setDisplayDescription] = useState(description);
+  const [displayStatus, setDisplayStatus] = useState(status_id);
+  const [displayAssignee, setDisplayAssignee] = useState(1);
+  const [displayDueDate, setDisplayDueDate] = useState(due_date);
+
   let assignedTo;
   if (item.user_id) {
     users.filter((user) => {
-      if (user.id.toString() === item.user_id.toString()) {
+      if (user.id.toString() === displayAssignee.toString()) {
         assignedTo = `${user.first_name} ${user.last_name}`;
       }
     });
   } else {
     assignedTo = "Unassigned";
   }
-
   return (
     <Fragment>
       <div
@@ -80,7 +86,7 @@ const IssueSummary = ({
         onClick={onOpen}
       >
         <p className={"card-title"}>
-          Issue#{item.id} - {item.title}
+          Issue#{item.id} - {displayTitle}
         </p>
         <p className={"card-asignee"}>
           <i>{assignedTo}</i>
@@ -99,6 +105,16 @@ const IssueSummary = ({
         userId={userId}
         deleteIssue={deleteIssue}
         addComment={addComment}
+        displayTitle={displayTitle}
+        displayDescription={displayDescription}
+        displayStatus={displayStatus}
+        displayAssignee={displayAssignee}
+        displayDueDate={displayDueDate}
+        setDisplayTitle={setDisplayTitle}
+        setDisplayDescription={setDisplayDescription}
+        setDisplayStatus={setDisplayStatus}
+        setDisplayAssignee={setDisplayAssignee}
+        setDisplayDueDate={setDisplayDueDate}
       />
     </Fragment>
   );

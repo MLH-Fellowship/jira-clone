@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 const IssueDescription = ({
   issue,
   users,
-  updateStatus,
-  updateTitle,
-  updateDescription,
-  updateAssignee,
-  updateDueDate,
+  displayTitle,
+  displayDescription,
+  displayStatus,
+  displayAssignee,
+  displayDueDate,
 }) => {
-  const { description, id, title, status, label } = issue;
+  const { id } = issue;
   const statusMap = {
     1: "Open",
     2: "In Progress",
@@ -17,7 +17,7 @@ const IssueDescription = ({
     4: "Closed",
   };
   const [comments, setComments] = useState([]);
-  console.log(users);
+
   useEffect(() => {
     fetch("/comments", {
       method: "GET",
@@ -41,16 +41,18 @@ const IssueDescription = ({
 
   let assignedTo;
   let user = "";
-  if (issue.user_id) {
-    user = users.find(({ id }) => id === issue.user_id);
+
+  if (displayAssignee) {
+    user = users.find(({ id }) => id.toString() === displayAssignee.toString());
   }
-  if (user !== "") {
+  // console.log('here:', user.first_name, user.last_name)
+  if (user && user !== "") {
     assignedTo = `Assigned to: ${user.first_name} ${user.last_name}`;
   } else {
     assignedTo = "Unassigned";
   }
 
-  let dueDate = issue.due_date ? `Due: ${issue.due_date}` : "No due date";
+  let dueDate = displayDueDate ? `Due: ${displayDueDate}` : "No due date";
 
   const getCommenter = (commenter) => {
     let commentUser = "";
@@ -66,15 +68,15 @@ const IssueDescription = ({
       <h1 className="section-header">
         <b>
           {" "}
-          Issue#{id} - {title}{" "}
+          Issue#{id} - {displayTitle}{" "}
         </b>
       </h1>
       <div className="section">
-        <p>{description}</p>
+        <p>{displayDescription}</p>
         <div style={{ margin: "25px 0 20px" }}>
-          <span className="status pill">{statusMap[issue.status_id]}</span>
+          <span className="status pill">{statusMap[displayStatus]}</span>
           <span className="assignedTo pill">{assignedTo}</span>
-          <span className="due pill">{dueDate}</span>
+          <span className="due pill">{displayDueDate}</span>
         </div>
       </div>
       <h2 className="section-header">Comments</h2>

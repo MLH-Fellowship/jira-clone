@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import IssueTools from "../issue/IssueTools";
 import IssueDescription from "../issue/IssueDescription";
@@ -19,8 +19,23 @@ const IssueDetails = ({
   updateDescription,
   updateAssignee,
   updateDueDate,
+  displayTitle,
+  displayDescription,
+  displayStatus,
+  displayAssignee,
+  displayDueDate,
+  setDisplayTitle,
+  setDisplayDescription,
+  setDisplayStatus,
+  setDisplayAssignee,
+  setDisplayDueDate,
 }) => {
-  const { title, id } = issue;
+  const { title, id, description, status_id, user_id, due_date } = issue;
+  // const [displayTitle, setDisplayTitle] = useState(title);
+  // const [displayDescription, setDisplayDescription] = useState(description);
+  // const [displayStatus, setDisplayStatus] = useState(status_id);
+  // const [displayAssignee, setDisplayAssignee] = useState(1);
+  // const [displayDueDate, setDisplayDueDate] = useState(due_date);
   return (
     <div>
       <Modal
@@ -37,7 +52,15 @@ const IssueDetails = ({
           <br />
           <div className="issue-details">
             <div className="issue-description">
-              <IssueDescription issue={issue} users={users} />
+              <IssueDescription
+                issue={issue}
+                users={users}
+                displayTitle={displayTitle}
+                displayDescription={displayDescription}
+                displayStatus={displayStatus}
+                displayAssignee={displayAssignee}
+                displayDueDate={displayDueDate}
+              />
             </div>
             <div className="issue-tools">
               <IssueTools
@@ -51,6 +74,11 @@ const IssueDetails = ({
                 userId={userId}
                 deleteIssue={deleteIssue}
                 addComment={addComment}
+                setDisplayTitle={setDisplayTitle}
+                setDisplayDescription={setDisplayDescription}
+                setDisplayStatus={setDisplayStatus}
+                setDisplayAssignee={setDisplayAssignee}
+                setDisplayDueDate={setDisplayDueDate}
               />
             </div>
           </div>
