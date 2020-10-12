@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import IssueTools from "../issue/IssueTools";
 import IssueDescription from "../issue/IssueDescription";
@@ -10,7 +10,6 @@ const IssueDetails = ({
   onClose,
   issue,
   users,
-  updateIssue,
   userId,
   deleteIssue,
   addComment,
@@ -30,12 +29,30 @@ const IssueDetails = ({
   setDisplayAssignee,
   setDisplayDueDate,
 }) => {
-  const { title, id, description, status_id, user_id, due_date } = issue;
-  // const [displayTitle, setDisplayTitle] = useState(title);
-  // const [displayDescription, setDisplayDescription] = useState(description);
-  // const [displayStatus, setDisplayStatus] = useState(status_id);
-  // const [displayAssignee, setDisplayAssignee] = useState(1);
-  // const [displayDueDate, setDisplayDueDate] = useState(due_date);
+  const { comments } = issue;
+  const [displayComments, setDisplayComments] = useState(comments);
+
+  useEffect(() => {
+    fetch("/comments", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setDisplayComments(result);
+          console.log(result);
+        },
+        (error) => {
+          // how to handel this error?
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }, []);
+
   return (
     <div>
       <Modal
@@ -60,6 +77,7 @@ const IssueDetails = ({
                 displayStatus={displayStatus}
                 displayAssignee={displayAssignee}
                 displayDueDate={displayDueDate}
+                displayComments={displayComments}
               />
             </div>
             <div className="issue-tools">
@@ -79,6 +97,8 @@ const IssueDetails = ({
                 setDisplayStatus={setDisplayStatus}
                 setDisplayAssignee={setDisplayAssignee}
                 setDisplayDueDate={setDisplayDueDate}
+                setDisplayComments={setDisplayComments}
+                displayComments={displayComments}
               />
             </div>
           </div>

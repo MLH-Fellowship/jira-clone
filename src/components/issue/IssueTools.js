@@ -25,6 +25,8 @@ const IssueTools = ({
   setDisplayStatus,
   setDisplayAssignee,
   setDisplayDueDate,
+  setDisplayComments,
+  displayComments,
 }) => {
   const [assignee, setAssignee] = useState("");
   const [comment, setComment] = useState("");
@@ -46,7 +48,6 @@ const IssueTools = ({
     e.preventDefault();
 
     if (assignee !== "") {
-      console.log("????", assignee);
       setDisplayAssignee(assignee);
       updateAssignee(issue.id, assignee);
     }
@@ -57,7 +58,6 @@ const IssueTools = ({
     }
     if (useDueDate === true && dueDate !== "") {
       const due_date = dateFormat(dueDate, "yyyy/mm/dd");
-      // console.log(issue.id, due_date);
       setDisplayDueDate(due_date);
       updateDueDate(issue.id, due_date);
     }
@@ -69,7 +69,7 @@ const IssueTools = ({
       setDisplayDescription(description);
       updateDescription(issue.id, description);
     }
-    // toast.dark(`Ticket Updated`);
+    toast.dark(`Ticket Updated`);
   };
 
   const onCommentSubmit = (e) => {
@@ -78,10 +78,12 @@ const IssueTools = ({
       let commentDate = dateFormat(now, "dddd mm/dd/yy h:MM TT");
       let comm = {
         content: comment,
-        user_id: "001",
-        date: commentDate,
-        issue: issue.id,
+        user_id: 1,
+        created_at: commentDate,
+        ticket_id: issue.id,
       };
+      setDisplayComments([...displayComments, comm]);
+      console.log(comm);
       addComment(comm);
       toast.dark(`Comment created`);
     }
@@ -115,10 +117,11 @@ const IssueTools = ({
         setShowDelete(false);
     }
   };
+  const disableCommentBtn = comment === "" ? true : false;
 
   const disableBtn =
     assignee === "" &&
-    comment === "" &&
+    // comment === "" &&
     !useDueDate &&
     title === issue.title &&
     description === issue.description &&
@@ -161,8 +164,8 @@ const IssueTools = ({
               rows={4}
             />
             <button
-              disabled={disableBtn}
-              className={disableBtn ? "disabledBtn" : "submit"}
+              disabled={disableCommentBtn}
+              className={disableCommentBtn ? "disabledBtn" : "submit"}
               style={{ margin: "10px 0" }}
               onClick={onCommentSubmit}
             >
@@ -247,7 +250,7 @@ const IssueTools = ({
               <button
                 disabled={disableBtn}
                 className={disableBtn ? "disabledBtn" : "submit"}
-                style={{ margin: "10px 0", clear: "both" }}
+                style={{ margin: "10px 0", clear: "both", float: "left" }}
                 onClick={onSubmit}
               >
                 Submit

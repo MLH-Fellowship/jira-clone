@@ -8,6 +8,7 @@ const IssueDescription = ({
   displayStatus,
   displayAssignee,
   displayDueDate,
+  displayComments,
 }) => {
   const { id } = issue;
   const statusMap = {
@@ -16,28 +17,28 @@ const IssueDescription = ({
     3: "In Review",
     4: "Closed",
   };
-  const [comments, setComments] = useState([]);
+  // const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    fetch("/comments", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setComments(result);
-          console.log(result);
-        },
-        (error) => {
-          // how to handel this error?
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
-  }, []);
+  // useEffect(() => {
+  //   fetch("/comments", {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         setComments(result);
+  //         console.log(result);
+  //       },
+  //       (error) => {
+  //         // how to handel this error?
+  //         this.setState({
+  //           isLoaded: true,
+  //           error,
+  //         });
+  //       }
+  //     );
+  // }, []);
 
   let assignedTo;
   let user = "";
@@ -45,7 +46,7 @@ const IssueDescription = ({
   if (displayAssignee) {
     user = users.find(({ id }) => id.toString() === displayAssignee.toString());
   }
-  // console.log('here:', user.first_name, user.last_name)
+
   if (user && user !== "") {
     assignedTo = `Assigned to: ${user.first_name} ${user.last_name}`;
   } else {
@@ -81,11 +82,11 @@ const IssueDescription = ({
       </div>
       <h2 className="section-header">Comments</h2>
       <div className="section">
-        {comments &&
-          comments.length > 0 &&
-          comments.map((comment, idx) => {
+        {displayComments &&
+          displayComments.length > 0 &&
+          displayComments.map((comment, idx) => {
             return (
-              <div key={idx + comment.created_at}>
+              <div key={`${idx}: ${comment.created_at}`}>
                 <p>
                   <i>{comment.created_at}</i>
                   {" - "}
@@ -95,7 +96,9 @@ const IssueDescription = ({
               </div>
             );
           })}
-        {(!comments || comments.length === 0) && <p>Nothing yet.</p>}
+        {(!displayComments || displayComments.length === 0) && (
+          <p>Nothing yet.</p>
+        )}
       </div>
     </>
   );
