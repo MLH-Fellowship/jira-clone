@@ -1,15 +1,17 @@
 :root {
-  --primary-color: rgb(62, 100, 255);
   --text-color: #172b4d;
-  --disabled-color: #fad6d6;
-  --background-color: #05507C;
+  --background-color: #2d3843;
+  --light-color: #bcd3c2;
+  --accent-text-color: #e0e7b8;
+  /* --highlight-color: #d29484; */
+  --highlight-color: #dda697;
 }
-
 
 body {
   color: var(--text-color);
   font-family: sans-serif;
   margin: 0;
+  background-color: var(--light-color);
 }
 
 a {
@@ -22,18 +24,21 @@ p {
   text-align: left;
 }
 
-button, input {
+h2 {
+  margin: 0;
+}
+h1 {
+  margin: 0;
+}
+
+button,
+input {
   padding: 4px;
-  border: 1px solid var(--disabled-color);
+  border: 1px solid var(--highlight-color);
 }
 
 button {
-  color: var(--primary-color);
   cursor: pointer;
-}
-
-button.active {
-  color: var(--primary-color);
 }
 
 button.active:after {
@@ -42,7 +47,6 @@ button.active:after {
   margin: 0 auto;
   width: 50%;
   padding-top: 4px;
-  border-bottom: 1px solid var(--primary-color);
 }
 
 .row {
@@ -63,18 +67,12 @@ button.active:after {
 .card:hover {
   cursor: pointer;
 }
-
 .card-title {
   font-weight: 600;
   font-size: 16px;
 }
-
-.card-asignee{
-  text-align: right;
-}
-.card-status{
-  text-align: right;
-  padding-left: 10px;
+.card-asignee {
+  text-align: left;
 }
 
 .drop-wrapper {
@@ -90,7 +88,7 @@ button.active:after {
   padding: 20px;
   background-color: var(--background-color);
   border-radius: 5px;
-  width:20%;
+  width: 20%;
   min-width: 150px;
 }
 
@@ -99,7 +97,7 @@ button.active:after {
   font-weight: 600;
   margin-bottom: 20px;
   margin-top: 0;
-  color:white;
+  color: white;
 }
 
 .list {
@@ -107,7 +105,7 @@ button.active:after {
 }
 
 .modal {
-  background-color: #F4F5F7;
+  background-color: #f4f5f7;
   border-radius: 2px;
   margin: 48px 0 80px;
   min-height: 450px;
@@ -124,12 +122,12 @@ button.active:after {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.7);;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .close-btn {
   font-size: 26px;
-  color: #ff0000;
+  color: #963a0d;
   font-weight: bold;
   float: right;
   border: none;
@@ -137,5 +135,148 @@ button.active:after {
 }
 
 .close-btn:hover {
-  background-color: #DCDCDC;
+  background-color: #dcdcdc;
+}
+
+.issue-details {
+  display: flex;
+}
+.issue-description {
+  flex: 70%;
+  border: 2px solid #172b4d;
+  margin-right: 30px;
+}
+.issue-tools {
+  flex: 30%;
+  border: 2px solid #172b4d;
+}
+
+.section-header {
+  background-color: var(--background-color);
+  color: white;
+  padding: 10px;
+}
+.section {
+  padding: 15px;
+  font-size: 18px;
+}
+.label {
+  margin-right: 20px;
+  padding: 10px;
+  background-color: var(--background-color);
+  color: white;
+}
+
+.status {
+  background-color: var(--highlight-color);
+}
+.assignedTo {
+  background-color: var(--accent-text-color);
+}
+.due {
+  background-color: var(--light-color);
+}
+.pill {
+  color: var(--text-color);
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid var(--text-color);
+}
+.tool {
+  color: var(--text-color);
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid var(--text-color);
+  margin: 0;
+}
+.tool:hover {
+  cursor: pointer;
+}
+.show {
+  background-color: var(--light-color);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--background-color);
+}
+
+li {
+  float: left;
+  font-size: 20px;
+}
+
+li a {
+  display: block;
+  color: var(--accent-text-color);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.form {
+  width: 50%;
+  margin: 30px auto;
+}
+.input {
+  width: 100%;
+  padding: 20px;
+}
+.submit {
+  width: 50%;
+  padding: 15px;
+  background-color: var(--highlight-color);
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  font-weight: bold;
+}
+.create-issue {
+  width: 50%;
+  padding: 15px;
+  background-color: var(--highlight-color);
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  font-weight: bold;
+}
+.disabledBtn {
+  width: 50%;
+  padding: 15px;
+}
+.disabledBtn:hover {
+  cursor: auto;
+}
+.submit:hover {
+  background-color: var(--light-color);
+}
+.create-issue:hover {
+  background-color: var(--accent-text-color);
+}
+
+.checkbox-wrapper {
+  background: white;
+  font-size: 14px;
+  color: #757575;
+  width: 100%;
+  padding: 10px 20px;
+  border: 1px solid var(--highlight-color);
+}
+
+.comment {
+  min-height: 50px;
+  width: 90%;
+  margin: 2%;
+}
+
+.highlight-region {
+  background-color: var(--highlight-color);
 }

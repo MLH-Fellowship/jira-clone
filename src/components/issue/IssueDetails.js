@@ -1,9 +1,26 @@
-import React from 'react'
-import Modal from "react-modal"
+import React from "react";
+import Modal from "react-modal";
+import IssueTools from "../issue/IssueTools";
+import IssueDescription from "../issue/IssueDescription";
 
 Modal.setAppElement("#root");
 
-const IssueDetails = ({ show, onClose, item }) => {
+const IssueDetails = ({
+  show,
+  onClose,
+  issue,
+  users,
+  updateIssue,
+  userId,
+  deleteIssue,
+  addComment,
+  updateStatus,
+  updateTitle,
+  updateDescription,
+  updateAssignee,
+  updateDueDate,
+}) => {
+  const { title, id } = issue;
   return (
     <div>
       <Modal
@@ -13,27 +30,34 @@ const IssueDetails = ({ show, onClose, item }) => {
         overlayClassName={"overlay"}
       >
         <div className="">
-          <button className="close-btn" onClick={onClose}>X</button>
-          <h1 className='modal-title'>
-           <b> Issue#{item.id}</b>
-            <br/> {item.title}
-          </h1>
+          <button className="close-btn" onClick={onClose}>
+            X
+          </button>
+          <br />
+          <br />
+          <div className="issue-details">
+            <div className="issue-description">
+              <IssueDescription issue={issue} users={users} />
+            </div>
+            <div className="issue-tools">
+              <IssueTools
+                users={users}
+                updateStatus={updateStatus}
+                updateTitle={updateTitle}
+                updateDescription={updateDescription}
+                updateAssignee={updateAssignee}
+                updateDueDate={updateDueDate}
+                issue={issue}
+                userId={userId}
+                deleteIssue={deleteIssue}
+                addComment={addComment}
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <h2 style={{fontSize:"20px"}}>Description:</h2>
-          <p>{item.content}</p>
-          <p>{item.icon} {item.status}</p>
-        </div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
 export default IssueDetails;
